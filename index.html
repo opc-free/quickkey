@@ -519,6 +519,23 @@
       border-radius: 0 0 8px 8px;
     }
 
+    .pricing-plan.premium {
+      border-color: rgba(251,191,36,0.3);
+      box-shadow: 0 0 60px rgba(251,191,36,0.08);
+    }
+
+    .pricing-plan.premium::before {
+      content: '高级';
+      position: absolute;
+      top: -1px; right: 32px;
+      padding: 6px 14px;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 0 0 8px 8px;
+    }
+
     .plan-name {
       font-size: 14px;
       font-weight: 600;
@@ -823,37 +840,52 @@
       <p class="section-desc">免费版满足基础练习，专业版解锁全部高级功能</p>
     </div>
 
-    <div class="pricing-grid reveal">
+    <div class="pricing-grid reveal" style="grid-template-columns: 1fr 1fr 1fr;">
       <div class="pricing-plan">
         <div class="plan-name">免费版</div>
         <div class="plan-price">¥0</div>
         <div class="plan-desc">基础打字练习，适合初学者体验</div>
         <ul class="plan-features">
           <li class="included">基础打字练习</li>
-          <li class="included">小学英语词库</li>
-          <li class="included">泡泡消除游戏</li>
           <li class="included">基础数据统计</li>
-          <li class="not-included">初中及以上词库</li>
-          <li class="not-included">新概念英语</li>
-          <li class="not-included">高级游戏模式</li>
+          <li class="included">成就系统</li>
+          <li class="not-included">英语词库</li>
+          <li class="not-included">小游戏</li>
           <li class="not-included">弱项分析</li>
         </ul>
         <a href="https://github.com/likunpeng/quickwrite/releases" target="_blank" class="plan-cta secondary">免费下载</a>
       </div>
 
       <div class="pricing-plan pro">
+        <div class="plan-name">PRO 版</div>
+        <div class="plan-price">免费</div>
+        <div class="plan-desc">关注公众号获取激活码，解锁进阶功能</div>
+        <ul class="plan-features">
+          <li class="included">全部免费版功能</li>
+          <li class="included">人教版小学英语词库</li>
+          <li class="included">人教版初中英语词库</li>
+          <li class="included">人教版高中英语词库</li>
+          <li class="included">拯救小鸟游戏</li>
+          <li class="included">抓大鱼游戏</li>
+          <li class="included">基础数据分析</li>
+          <li class="not-included">四六级词库</li>
+          <li class="not-included">弱项键位热力图</li>
+        </ul>
+        <button class="plan-cta secondary" onclick="handlePROActivation()">获取激活码</button>
+      </div>
+
+      <div class="pricing-plan premium">
         <div class="plan-name">专业版</div>
         <div class="plan-price">¥9.9<span>/永久</span></div>
         <div class="plan-desc">解锁全部功能，一次购买永久使用</div>
         <ul class="plan-features">
-          <li class="included">全部免费版功能</li>
-          <li class="included">初中 / 高中英语词库</li>
+          <li class="included">全部 PRO 版功能</li>
           <li class="included">大学英语四六级</li>
           <li class="included">新概念英语全四册</li>
           <li class="included">雅思 / 托福 / GRE 词库</li>
           <li class="included">程序员专用词汇</li>
-          <li class="included">拯救小鸟 / 抓大鱼游戏</li>
-          <li class="included">弱项键位分析与热力图</li>
+          <li class="included">弱项键位热力图分析</li>
+          <li class="included">高级数据统计</li>
           <li class="included">支持 3 台设备激活</li>
         </ul>
         <button class="plan-cta primary" onclick="handlePurchase()">立即购买</button>
@@ -862,21 +894,10 @@
   </div>
 </section>
 
-<!-- Final CTA -->
-<section class="final-cta reveal">
-  <h2>准备好<span class="gradient-text">提升打字速度</span>了吗？</h2>
-  <p>加入 QuickKey，开启高效打字训练之旅</p>
-  <div class="hero-actions" style="justify-content:center;">
-    <button class="btn btn-primary" onclick="handlePurchase()">购买专业版</button>
-    <a href="https://github.com/likunpeng/quickwrite/releases" target="_blank" class="btn btn-secondary">免费下载</a>
-  </div>
-</section>
-
 <!-- Footer -->
 <footer>
   <ul class="footer-links">
-    <li><a href="https://github.com/likunpeng/quickwrite" target="_blank">GitHub</a></li>
-    <li><a href="mailto:support@quickkey.app">联系支持</a></li>
+    <li><a href="mailto:greenboy1@163.com">联系支持</a></li>
   </ul>
   <p>© 2026 QuickKey · 让每个人都能享受打字的乐趣</p>
 </footer>
@@ -926,12 +947,8 @@
     badge.style.opacity = '0';
   });
 
-  // Purchase handler
-  function handlePurchase() {
-    // 方案1: 跳转到外部购买平台（推荐）
-    // window.open('https://quickkey.lemonsqueezy.com/buy/xxx', '_blank');
-
-    // 方案2: 显示联系购买弹窗（当前使用）
+  // PRO 版激活码获取
+  function handlePROActivation() {
     const modal = document.createElement('div');
     modal.style.cssText = `
       position: fixed;
@@ -955,31 +972,84 @@
         text-align: center;
         animation: fadeUp 0.3s ease;
       ">
-        <div style="font-size: 48px; margin-bottom: 16px;">💬</div>
-        <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">联系购买</h3>
+        <div style="font-size: 48px; margin-bottom: 16px;">🎮</div>
+        <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">获取 PRO 版激活码</h3>
         <p style="color: #8b9bb4; font-size: 15px; line-height: 1.7; margin-bottom: 24px;">
-          请添加微信或发送邮件购买专业版激活码<br>
-          价格：<span style="color:#6366f1;font-weight:700;">¥9.9</span> / 永久使用
+          扫码关注公众号「月月木子说」<br>
+          发送「激活」即可获取免费激活码
         </p>
-        <div style="background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
-          <div style="font-size: 13px; color: #8b9bb4; margin-bottom: 8px;">微信</div>
-          <div style="font-size: 18px; font-weight: 700; font-family: monospace;">your-wechat-id</div>
-        </div>
-        <div style="background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2); border-radius: 12px; padding: 16px; margin-bottom: 24px;">
-          <div style="font-size: 13px; color: #8b9bb4; margin-bottom: 8px;">邮箱</div>
-          <div style="font-size: 16px; font-weight: 600;">support@quickkey.app</div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+          <div style="font-size: 14px; color: #a0b0cc; margin-bottom: 16px; font-weight: 500;">📱 扫码关注公众号</div>
+          <img src="qrcode_yueyuemuzishuo.jpg" alt="公众号二维码" style="width: 200px; height: 200px; border-radius: 12px; margin: 0 auto; display: block; border: 2px solid rgba(255,255,255,0.1);" />
+          <div style="font-size: 16px; color: #f0f4f8; margin-top: 16px; font-weight: 600;">月月木子说</div>
         </div>
         <button onclick="this.closest('.modal').remove()" style="
           width: 100%;
-          padding: 12px;
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.1);
-          color: white;
+          padding: 14px;
+          background: rgba(99,102,241,0.2);
+          border: 1px solid rgba(99,102,241,0.3);
+          color: #a5b4fc;
           border-radius: 10px;
-          font-size: 15px;
+          font-size: 16px;
+          font-weight: 600;
           cursor: pointer;
-          transition: background 0.2s;
-        " onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">关闭</button>
+          transition: all 0.2s;
+        " onmouseover="this.style.background='rgba(99,102,241,0.3)'" onmouseout="this.style.background='rgba(99,102,241,0.2)'">关闭</button>
+      </div>
+    `;
+    modal.className = 'modal';
+    modal.addEventListener('click', e => {
+      if (e.target === modal) modal.remove();
+    });
+    document.body.appendChild(modal);
+  }
+
+  // Purchase handler
+  function handlePurchase() {
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+    `;
+    modal.innerHTML = `
+      <div style="
+        background: linear-gradient(145deg, #1a2236 0%, #1e2a45 100%);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 40px 32px;
+        max-width: 460px;
+        width: 100%;
+        text-align: center;
+        animation: fadeUp 0.3s ease;
+        box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+      ">
+        <div style="font-size: 24px; font-weight: 700; color: #f0f4f8; margin-bottom: 12px; letter-spacing: 0.5px;">购买专业版</div>
+        <p style="color: #8b9bb4; font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
+          扫码添加个人微信 · 发送「购买专业版」获取激活码
+        </p>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 24px; margin-bottom: 24px;">
+          <img src="weixin_person.JPG" alt="微信二维码" style="width: 280px; height: 280px; border-radius: 12px; margin: 0 auto; display: block; border: 3px solid rgba(255,255,255,0.1); box-shadow: 0 6px 20px rgba(0,0,0,0.3);" />
+        </div>
+        <button onclick="this.closest('.modal').remove()" style="
+          width: 100%;
+          padding: 14px;
+          background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+          border: none;
+          color: white;
+          border-radius: 12px;
+          font-size: 16px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.3s;
+          box-shadow: 0 4px 15px rgba(99,102,241,0.4);
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(99,102,241,0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(99,102,241,0.4)'">关闭</button>
       </div>
     `;
     modal.className = 'modal';
